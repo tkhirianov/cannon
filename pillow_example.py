@@ -35,7 +35,8 @@ class MainWindow:
         self.balls.append(Ball(self.canvas, self.ball_image, 100, 100))
         
     def loopback(self):
-        print("Hello!")
+        for ball in self.balls:
+            ball.go()
         self.canvas.after(500, self.loopback)
 
     def mainloop(self):
@@ -45,9 +46,17 @@ class MainWindow:
 
 class Ball:   
     def __init__(self, canvas, ball_image, x, y):
+        self.canvas = canvas
+        self.avatar = canvas.create_image(x, y, image=ball_image)
         self.x = x
         self.y = y
-        self.avatar = canvas.create_image(x, y, image=ball_image)
+        self.dx = 5
+        self.dy = 5
+    
+    def go(self):
+        self.x += self.dx
+        self.y += self.dy
+        self.canvas.coords(self.avatar, self.x, self.y)
 
 
 def main():
